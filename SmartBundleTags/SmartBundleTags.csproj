@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Branden Martin</Authors>
+    <Company>Hexagon Digital</Company>
+    <Product>Smart Bundle Tags</Product>
+    <Description>This smart tag will automatically switch between a minified file bundle or source files based on environment with a single tag by reading your bundle configuration file.</Description>
+    <Copyright>Copyright © 2020</Copyright>
+    <PackageProjectUrl>https://github.com/BrandenMartin/SmartBundleTags</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/BrandenMartin/SmartBundleTags</RepositoryUrl>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageTags />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ApplicationIcon>sbt.ico</ApplicationIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
