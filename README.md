@@ -22,46 +22,45 @@ If you have the Bundle & Minify extension setup and working with your bundleconf
 <bundle name="[your bundle name here]"/>
 ```
 
-To get the bundle tag working, follow these steps:
+### To get the bundle tag working, follow these steps:
 
-  1. Add the following to your startup.cs file in the ConfigureServices method
+1. Add the following to your startup.cs file in the ConfigureServices method
+```C#
+  #if (DEBUG)
+      services.AddBundles();
+  #else
+      services.AddBundles(options => {
+          options.UseBundles = true;
+          options.AppendVersion = true;
+      });
+  #endif
+```
 
+
+2. Add the following to the startup.cs file in the Configure method
 ```C#
-#if (DEBUG)
-    services.AddBundles();
-#else
-    services.AddBundles(options => {
-        options.UseBundles = true;
-        options.AppendVersion = true;
-    });
-#endif
+  #if DEBUG
+      //Allow direct access to un minified source files if debugging
+      app.UseStaticFiles(new StaticFileOptions {
+          FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory()),
+          RequestPath = ""
+      });
+  #endif
 ```
-    
-  2. Add the following to the startup.cs file in the Configure method
-  
-```C#
-#if DEBUG
-    //Allow direct access to un minified source files if debugging
-    app.UseStaticFiles(new StaticFileOptions {
-        FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory()),
-        RequestPath = ""
-    });
-#endif
-```
-    
-  3. Add the following to your _ViewStart.cshtml file
-  
+
+
+3. Add the following to your _ViewStart.cshtml file
 ```HTML+Razor
-@using SmartBundleTags.BundleTagHelpers
+  @using SmartBundleTags.BundleTagHelpers
 ```
-  
-  4. Add the following to your _ViewImports.cshtml file
-  
+
+
+4. Add the following to your _ViewImports.cshtml file
 ```HTML+Razor
   @using SmartBundleTags
   @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
   @addTagHelper *, SmartBundleTags
 ```
+
     
-    If the above steps were done correctly the `<bundle>` tag should now support syntax highlighting and will work properly.
-  
+If the above steps were done correctly the `<bundle>` tag should now support syntax highlighting and will work properly.
